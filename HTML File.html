@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Escolha o MELHOR gênero do METAL</title>
+    <style>
+        body {
+            background-color: black;
+            overflow: hidden;
+            word-wrap: break-word;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            font-size: 30pt;
+            height: 100vh;
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #genero {
+            cursor: pointer;
+            margin: 0 0 30px 0;
+         }
+
+         @keyframes guitarrasusto {
+              0% {
+                transform: scale(0);
+            }
+
+            50% {
+               transform: scale(50);
+
+            }
+
+            70% {
+               transform: scale(100);
+
+            }
+
+            100% {
+               transform: scale(200);
+
+            }
+        }
+
+        #botaoGenero {
+            color: #fff;
+            font-size: 30px;
+            background-color: black;
+            padding: 10px;
+            border: 3px solid transparent;
+            outline: none;
+            cursor: pointer;
+            transition: all 100ms ease;
+        }
+
+        #botaoGenero:hover {
+            border-image: linear-gradient(90deg, red, red, red) 1 stretch;
+            background-color: red;
+            animation: none;
+        }
+
+        #botaoGenero:not(:hover) {
+            animation: gradiente 330ms ease-in-out infinite;
+        }
+
+        #botaoGenero.piscar {
+           border-image: linear-gradient(0deg, orange, orange, orange) 1 stretch;
+           background-color: orange;
+        }
+
+        @keyframes gradiente {
+            0% {
+                border-image: linear-gradient(0deg, black, black, red) 1 stretch;
+            }
+            25% {
+                border-image: linear-gradient(90deg, black, black, red) 1 stretch;
+            }
+            50% {
+                border-image: linear-gradient(180deg, black, black, red) 1 stretch;
+            }
+            75% {
+                border-image: linear-gradient(270deg, black, black, red) 1 stretch;
+            }
+            100% {
+                border-image: linear-gradient(360deg, black, black, red) 1 stretch;
+            }
+        }
+
+        #telinha {
+            position: absolute;
+            text-align: center;
+            top: -100px;
+            font-size: 20px;
+            background: #101010;
+            padding: 0 10px 10px 10px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            transition: all 1s ease;
+        }
+
+    </style>
+</head>
+<body>
+<div id="container">
+    <p id="genero">🎸</p>
+    <button id="botaoGenero" onclick="pegarGeneroAleatorio()">Escolha o melhor gênero de metal</button>
+    <div id="telinha"></div>
+</div>
+
+<script>
+    let cliqueNoBotaoRealizado = false;
+
+    const generos = [
+      { genero: "Black metal", link: "https://www.youtube.com/watch?v=73Za2PVVDcI" },
+      { genero: "Blackened death metal", link: "https://www.youtube.com/watch?v=SCS6q1Oteg8" },
+      { genero: "Blackgaze", link: "https://www.youtube.com/watch?v=0fR3FbmZUSU" },
+      { genero: "Death metal", link: "https://www.youtube.com/watch?v=gWm_eljedVQ" },
+      { genero: "Brutal death metal", link: "https://www.youtube.com/watch?v=ELiqfaT_2NQ" },
+      { genero: "Deathcore", link: "https://www.youtube.com/watch?v=9fdqJhNbnSY" },
+      { genero: "Grindcore", link: "https://www.youtube.com/watch?v=hGGGh03jN4w" },
+      { genero: "Melodic death", link: "https://www.youtube.com/watch?v=jf72blXQDGM" },
+      { genero: "Tech death", link: "https://www.youtube.com/watch?v=NTxVcgLG5SA" },
+      { genero: "Doom metal", link: "https://www.youtube.com/watch?v=iJRrJh1lPWI" },
+      { genero: "Power metal", link: "https://www.youtube.com/watch?v=cNa_ahnK7DA" },
+      { genero: "Thrash metal", link: "https://www.youtube.com/watch?v=TruUOPCMAQo" },
+      { genero: "Groove metal", link: "https://www.youtube.com/watch?v=BGKS3mW2XPM" },
+      { genero: "Folk metal", link: "https://www.youtube.com/watch?v=IubJcRJKATo" },
+      { genero: "Glam metal", link: "https://www.youtube.com/watch?v=bajsnZI955I" },
+      { genero: "Goregrind", link: "https://www.youtube.com/watch?v=QxX5oe_-cic" },
+      { genero: "Metalcore", link: "https://www.youtube.com/watch?v=zSZot6o0tY0" },
+      { genero: "Eletronicore", link: "https://www.youtube.com/watch?v=owrSlbD4spE" },
+      { genero: "Mathcore", link: "https://www.youtube.com/watch?v=s1xGr8xy0LU" },
+      { genero: "Nu metal", link: "https://www.youtube.com/watch?v=Tr8uesBowS4" },
+      { genero: "Djent", link: "https://www.youtube.com/watch?v=jSMeE6os9XY" },
+      { genero: "Thall", link: "https://www.youtube.com/watch?v=drALbzXjHK4" },
+      { genero: "Symphonic deathcore", link: "https://www.youtube.com/watch?v=2Dc7vOJCam0" },
+      { genero: "Melodic deathcore", link: "https://www.youtube.com/watch?v=PUFkKY2zINM" },
+      { genero: "Argent metal", link: "https://www.youtube.com/watch?v=8gnJQOL7DAc" },
+      { genero: "Rap metal", link: "https://www.youtube.com/watch?v=jS8AJl5EfAI" },
+      { genero: "Slam", link: "https://www.youtube.com/watch?v=HESKChY76cU" },
+      { genero: "Metal brasileiro", link: "https://www.youtube.com/watch?v=kjqBphjxZYs" },
+    ];
+
+    function pegarGeneroAleatorio() {
+    const valorRandom = Math.floor(Math.random() * generos.length);
+    const genero = document.getElementById("genero");
+
+    genero.innerHTML = generos[valorRandom].genero;
+    genero.dataset.valorRandom = valorRandom;
+
+    genero.addEventListener('click', (event) => {
+        const valorRandom = event.target.dataset.valorRandom;
+        window.open(generos[valorRandom].link);
+    });
+
+    abaixarTelinhaFrasesRodrigoGoes();
+}
+
+    function abaixarTelinhaFrasesRodrigoGoes(){
+       const frases = ['wow look at him', 'fake natty', 'não tem como não seguir o chefe, não é mesmo?', 'parece que eu te peguei, não é mesmo? Parece que descobri o seu segredinho sujo', 'Qual é o seu segredo? Como você se tornou tão aesthetic?' ];
+
+       if(!cliqueNoBotaoRealizado){
+         const valorRandom = Math.floor(Math.random() * frases.length);
+         const telinha = document.getElementById('telinha');
+         telinha.innerText = frases[valorRandom];
+         telinha.style.top = '0';
+       }};
+
+      const botaoGenero = document.getElementById('botaoGenero');
+      botaoGenero.addEventListener('click', () => {
+          botaoGenero.classList.add('piscar');
+          cliqueNoBotaoRealizado = true;
+          setTimeout(() => {
+              botaoGenero.classList.remove('piscar');
+          }, 150);
+      });
+
+     const genero = document.getElementById('genero');
+     genero.addEventListener('click', (event) => {
+        if(!cliqueNoBotaoRealizado){
+            genero.style.animation = 'guitarrasusto 200ms ease';
+        }
+    });
+</script>
+</body>
+</html>
