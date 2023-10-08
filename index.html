@@ -17,6 +17,11 @@
             height: 100vh;
         }
 
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
+
         #container {
             display: flex;
             flex-direction: column;
@@ -111,7 +116,7 @@
 </head>
 <body>
 <div id="container">
-    <p id="genero">🎸</p>
+    <a id="genero" href="" target="_blank">🎸</a>
     <button id="botaoGenero" onclick="pegarGeneroAleatorio()">Escolha o melhor gênero de metal</button>
     <div id="telinha"></div>
 </div>
@@ -155,12 +160,7 @@
     const genero = document.getElementById("genero");
 
     genero.innerHTML = generos[valorRandom].genero;
-    genero.dataset.valorRandom = valorRandom;
-
-    genero.addEventListener('click', (event) => {
-        const valorRandom = event.target.dataset.valorRandom;
-        window.open(generos[valorRandom].link);
-    });
+    genero.href = generos[valorRandom].link;
 
     abaixarTelinhaFrasesRodrigoGoes();
 }
